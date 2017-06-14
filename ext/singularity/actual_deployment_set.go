@@ -50,7 +50,6 @@ func (sc *deployer) RunningDeployments(reg sous.Registry, clusters sous.Clusters
 	retries := make(retryCounter)
 	errCh := make(chan error)
 	deps = sous.NewDeployStates()
-	sings := make(map[string]struct{})
 	reqCh := make(chan SingReq, len(clusters)*ReqsPerServer)
 	depCh := make(chan *sous.DeployState, ReqsPerServer)
 
@@ -65,12 +64,6 @@ func (sc *deployer) RunningDeployments(reg sous.Registry, clusters sous.Clusters
 	singWait.Add(len(clusters))
 	for _, url := range clusters {
 		url := url.BaseURL
-		if _, ok := sings[url]; ok {
-			singWait.Done()
-			continue
-		}
-		//sing.Debug = true
-		sings[url] = struct{}{}
 		client := sc.buildSingClient(url)
 		go singPipeline(reg, url, client, &depWait, &singWait, reqCh, errCh, clusters)
 	}
