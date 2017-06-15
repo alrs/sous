@@ -192,4 +192,8 @@ artifacts/$(LINUX_TARBALL): artifacts/$(LINUX_RELEASE_DIR)/sous
 artifacts/$(DARWIN_TARBALL): artifacts/$(DARWIN_RELEASE_DIR)/sous
 	cd artifacts && tar czv $(DARWIN_RELEASE_DIR) > $(DARWIN_TARBALL)
 
-.PHONY: clean clean-containers clean-container-certs clean-running-containers clean-container-images coverage install-ggen legendary release semvertagchk test test-gofmt test-integration setup-containers test-unit reject-wip wip staticcheck
+xgo:
+	go get github.com/karalabe/xgo
+	docker pull karalabe/xgo-$(GO_VERSION):latest
+	
+.PHONY: clean clean-containers clean-container-certs clean-running-containers clean-container-images coverage install-ggen legendary release semvertagchk test test-gofmt test-integration setup-containers test-unit reject-wip wip staticcheck xgo
