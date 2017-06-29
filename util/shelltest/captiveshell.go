@@ -292,7 +292,7 @@ func (sh *captiveShell) readExitStatus() (int, error) {
 	}
 
 	return strconv.Atoi(string(bytes.TrimFunc(sh.doneRead.Bytes(), func(r rune) bool {
-		return strings.Index(`0123456789`, string(r)) == -1
+		return !strings.Contains(`0123456789`, string(r))
 	})))
 
 }
