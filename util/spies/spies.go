@@ -129,7 +129,7 @@ func (s *Spy) Called(argList ...interface{}) mock.Arguments {
 	//For Ex:  github_com_docker_libkv_store_mock.WatchTree.pN39_github_com_docker_libkv_store_mock.Mock
 	//uses interface information unlike golang github.com/docker/libkv/store/mock.(*Mock).WatchTree
 	//With GCCGO we need to remove interface information starting from pN<dd>.
-	re := regexp.MustCompile("\\.pN\\d+_")
+	re := regexp.MustCompile(`\.pN\d+_`)
 	if re.MatchString(functionPath) {
 		functionPath = re.Split(functionPath, -1)[0]
 	}
